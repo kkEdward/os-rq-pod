@@ -15,6 +15,7 @@ import (
 	"github.com/cfhamlet/os-rq-pod/pkg/utils"
 	"github.com/cfhamlet/os-rq-pod/pod/global"
 	"github.com/go-redis/redis/v7"
+	"github.com/antlabs/deepcopy"
 )
 
 // SpcKeyReplace TODO
@@ -250,7 +251,8 @@ func (wrapper *RequestWrapper) mergeMethod(req *request.Request, reqConfig *Requ
 func (wrapper *RequestWrapper) mergeMeta(req *request.Request, reqConfig *RequestConfig, force bool) {
 	if len(req.Meta) == 0 {
 		if len(reqConfig.Meta) != 0 {
-			req.Meta = reqConfig.Meta
+			deepcopy.Copy(&req.Meta, &reqConfig.Meta).Do()
+// 			req.Meta = reqConfig.Meta
 			return
 		}
 		return
@@ -280,7 +282,8 @@ func (wrapper *RequestWrapper) mergeMeta(req *request.Request, reqConfig *Reques
 func (wrapper *RequestWrapper) mergeHeaders(req *request.Request, reqConfig *RequestConfig, force bool) {
 	if len(req.Headers) == 0 {
 		if len(reqConfig.Headers) != 0 {
-			req.Headers = reqConfig.Headers
+			deepcopy.Copy(&req.Headers, &reqConfig.Headers).Do()
+// 			req.Headers = reqConfig.Headers
 			return
 		}
 		return
@@ -291,7 +294,8 @@ func (wrapper *RequestWrapper) mergeHeaders(req *request.Request, reqConfig *Req
 func (wrapper *RequestWrapper) mergeCookies(req *request.Request, reqConfig *RequestConfig, force bool) {
 	if len(req.Cookies) == 0 {
 		if len(reqConfig.Cookies) != 0 {
-			req.Cookies = reqConfig.Cookies
+			deepcopy.Copy(&req.Cookies, &reqConfig.Cookies).Do()
+// 			req.Cookies = reqConfig.Cookies
 			return
 		}
 		return
